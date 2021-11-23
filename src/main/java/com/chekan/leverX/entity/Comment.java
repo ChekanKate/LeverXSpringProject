@@ -28,7 +28,7 @@ public class Comment {
     @JoinColumn(name="post_id", nullable=false)
     private GameObject post;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="author_id", nullable=false)
     private User author;
 

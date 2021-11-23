@@ -1,6 +1,8 @@
 package com.chekan.leverX.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 
@@ -13,27 +15,34 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false)
+    @Size(min = 2, max = 50, message = "First name length must be between 2 and 50 characters")
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 50)
+    @Size(min = 2, max = 50, message = "Last name length must be between 2 and 50 characters")
     private String lastName;
 
     @Column(name = "password", nullable = false)
+    @Size(min = 7, max = 50, message = "Password length must be between 7 and 25 characters")
     private String password;
 
     @Column(name = "email", nullable = false, length = 30)
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Enter the correct email format")
     private String email;
 
     @Column(name = "created_at")
     private Date createdAt;
 
     @Column(name = "role", nullable = false)
-    private UserRole role;
+    private String role;
 
-    public User(){}
+    public User(){
+        this.createdAt = new Date(System.currentTimeMillis());
+        this.role = "anonym";
+    }
 
-    public User(String firstName, String lastName, String password, String email, UserRole role) {
+    public User(String firstName, String lastName, String password, String email, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -90,11 +99,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public UserRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
