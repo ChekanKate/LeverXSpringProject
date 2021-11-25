@@ -17,6 +17,11 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/")
+    public String mainView() {
+        return "main";
+    }
+
     @RequestMapping("/registration")
     public String registerUser(Model model) {
         User user = new User();
